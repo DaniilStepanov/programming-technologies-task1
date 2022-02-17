@@ -37,7 +37,8 @@ public class BitSet<T> {
     public void setSize(int size) {
         this.size = size;
     }
-    public int getSize(){
+
+    public int getSize() {
         return size;
     }
 
@@ -71,6 +72,7 @@ public class BitSet<T> {
         setSize(this.size - el.length);
     }
 
+    @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < arr.size(); i++) {
