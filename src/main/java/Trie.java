@@ -1,16 +1,20 @@
 import java.util.*;
 
+import static java.util.Objects.hash;
+
 
 public class Trie {
     TrieNode root;
+    ArrayList<String> words;
 
     Trie () {
         root = new TrieNode(' ');
+        words = new ArrayList<>();
     }
 
     public boolean ifExist(String word) {
         TrieNode curr = root;
-        for (char c:word.toCharArray()) {
+        for (char c:word.toLowerCase().toCharArray()) {
             if (curr.getChild(c) == null) return false;
             else curr = curr.getChild(c);
         }
@@ -26,7 +30,7 @@ public class Trie {
     public void add(String word) {
         if (ifExist(word) || word.length() == 0) return;
         TrieNode curr = root;
-        var chars = word.toCharArray();
+        var chars = word.toLowerCase().toCharArray();
         for (int i = 0; i < chars.length; i++) {
             TrieNode child = curr.getChild(chars[i]);
             if (child != null) curr = child;
@@ -38,12 +42,13 @@ public class Trie {
             curr.text = word.substring(0, i + 1);
         }
         curr.isLastSymbol = true;
+        words.add(word);
     }
 
     public void remove(String word) {
         if (!ifExist(word) || word.length() == 0) return;
         TrieNode curr = root;
-        char[] chars = word.toCharArray();
+        char[] chars = word.toLowerCase().toCharArray();
         for (char c : chars) {
             TrieNode child = curr.getChild(c);
             if (child.count == 1) {
@@ -55,11 +60,12 @@ public class Trie {
             }
         }
         curr.isLastSymbol = false;
+        words.remove(word);
     }
 
     public ArrayList<String> prefixSearch(String prefix) {
         TrieNode curr = root;
-        for(char c:prefix.toCharArray()) {
+        for(char c:prefix.toLowerCase().toCharArray()) {
             curr = curr.getChild(c);
             if(curr == null) return null;
         }
@@ -76,6 +82,23 @@ public class Trie {
         return res;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Trie t = (Trie) obj;
+        return this.words.equals(t.words);
+    }
+
+    @Override
+    public String toString() {
+        return this.words.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return hash(this.words);
+    }
 
     public static void main(String[] args) {
         Trie t = new Trie();
@@ -83,6 +106,7 @@ public class Trie {
         t.add("qre");
         t.add("qaw");
         t.add("qawr");
+        t.add("Qawr");
         t.printIfExist("qaw");
         t.remove("qaw");
         t.printIfExist("qaw");
