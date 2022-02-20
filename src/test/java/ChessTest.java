@@ -12,17 +12,6 @@ public class ChessTest {
         Chess forErrors = new Chess();
 
         Chess e1 = new Chess();
-        /*Chess.addFigure(new Chess.point(1, 1, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(1, 4, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(1, 2, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(3, 1, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(4, 1, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(5, 1, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(6, 1, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(7, 1, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(7, 2, "White", "pawn"), e1);
-        Chess.addFigure(new Chess.point(7, 3, "White", "pawn"), e1);
-*/
 
         Chess.addFigure(new Chess.point(1, 4, "White", "pawn"), e1);
         assertEquals(false, Chess.equals(e1, forErrors));
