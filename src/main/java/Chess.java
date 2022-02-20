@@ -97,9 +97,9 @@ public class Chess {
             System.out.print("|");
             for (point element2 : element1) {
                 String str = String.format(formatInfo, element2.figure);
-                if (element2.color.equalsIgnoreCase("black")){
-                    System.out.print(ANSI_RED + str +ANSI_RESET  + "\t|\t");
-                } else System.out.print(str  + "\t|\t");
+                if (element2.color.equalsIgnoreCase("black")) {
+                    System.out.print(ANSI_RED + str + ANSI_RESET + "\t|\t");
+                } else System.out.print(str + "\t|\t");
 
             }
             System.out.println();
@@ -211,5 +211,21 @@ public class Chess {
         return true;
     }
 
+
+    public static void addAllColorPawns(String color, Chess desk) {
+        if (color.equalsIgnoreCase("white")) {
+            for (int l = 0; l < sizeY; l++) {
+                desk.desk[l][6].color = "white";
+                desk.desk[l][6].figure = "pawn";
+            }
+        } else if (color.equalsIgnoreCase("black")) {
+            for (int i = 0; i < sizeY; i++) {
+                desk.desk[i][1].color = "black";
+                desk.desk[i][1].figure = "pawn";
+            }
+        } else throw new IllegalArgumentException("Wrong information about color");
+
+
+    }
 
 }
