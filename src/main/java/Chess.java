@@ -90,8 +90,7 @@ public class Chess {
     public static void viewDesk(@NotNull point[][] in) { // :)
         final String ANSI_RESET = "\u001B[0m"; // белые будут белыми
         final String ANSI_RED = "\u001B[31m";  // а черные будут красными
-        String column1Format = "%-4.4s";
-        String formatInfo = column1Format;
+        String formatInfo = "%-4.4s";
         System.out.println("|-------------------------------------------------------------------------------------------|");
         for (point[] element1 : in) {
             System.out.print("|");
@@ -151,27 +150,12 @@ public class Chess {
         if (y < 0 || y > sizeX) throw new IllegalArgumentException("Wrong Y coordinate");
     }
 
-    public static void changePlaceOfFigure(int oldX, int oldY, int newX, int newY, Chess desk) {
+    public static void changePlaceOfFigure(int oldX, int oldY, int newX, int newY, @NotNull Chess desk) {
         wrongCoordinate(oldX, oldY);
         wrongCoordinate(newX, newY);
+
+
         boolean wrong = false;
-        /*
-        if (!desk.desk[oldX][oldY].figure.equalsIgnoreCase("0")) { // старая фигура не теряется!
-            for (int i = 0; i < 6; i++) {
-                if (desk.desk[oldX][oldY].figure.equalsIgnoreCase(figures[i])) {
-                    if (desk.desk[oldX][oldY].color.equalsIgnoreCase( "white")) {
-                        desk.typeOfWhiteFigures[i]--;
-                    } else desk.typeOfBlackFigures[i]--;
-                    wrong = true;
-                    break;
-                }
-            }
-            if (!wrong) throw new IllegalArgumentException("Try in another coordinate"); // вряд-ли дойдет до такого
-        } else throw new IllegalArgumentException("Try in another coordinate");
-*/
-
-
-        wrong = false;
         if (!desk.desk[newX][newY].figure.equalsIgnoreCase("0")) { // если новая клетка занята, новую фигуру выкидываем
             for (int i = 0; i < 6; i++) {
                 if (desk.desk[newX][newY].figure.equalsIgnoreCase(figures[i])) { // а есть ли такая фигура... считаем ее, чтобы удалить из счетчика по фигурам
@@ -212,20 +196,50 @@ public class Chess {
     }
 
 
-    public static void addAllColorPawns(String color, Chess desk) {
+    public static void addAllColorPawns(@NotNull String color, Chess desk) {
         if (color.equalsIgnoreCase("white")) {
             for (int l = 0; l < sizeY; l++) {
-                desk.desk[l][6].color = "white";
-                desk.desk[l][6].figure = "pawn";
+                desk.desk[6][l].color = "white";
+                desk.desk[6][l].figure = "pawn";
             }
         } else if (color.equalsIgnoreCase("black")) {
             for (int i = 0; i < sizeY; i++) {
-                desk.desk[i][1].color = "black";
-                desk.desk[i][1].figure = "pawn";
+                desk.desk[1][i].color = "black";
+                desk.desk[1][i].figure = "pawn";
             }
         } else throw new IllegalArgumentException("Wrong information about color");
+    }
+
+
+    public static void addAllFigures(Chess desk) {
+        for (int l = 0; l < sizeY; l++) {
+            desk.desk[6][l].color = "white";
+            desk.desk[6][l].figure = "pawn";
+        }
+        for (int i = 0; i < sizeY; i++) {
+            desk.desk[1][i].color = "black";
+            desk.desk[1][i].figure = "pawn";
+        }
+        addFigure(new point(0, 0, "black", "castle"), desk); // ладьи
+        addFigure(new point(0, sizeY - 1, "black", "castle"), desk);
+        addFigure(new point(sizeX - 1, 0, "white", "castle"), desk);
+        addFigure(new point(sizeX - 1, sizeY - 1, "white", "castle"), desk);
+
+        addFigure(new point(0, 1, "black", "knight"), desk); // кони
+        addFigure(new point(0, sizeY - 2, "black", "knight"), desk);
+        addFigure(new point(sizeX - 1, 1, "white", "knight"), desk);
+        addFigure(new point(sizeX - 1, sizeY - 2, "white", "knight"), desk);
+
+        addFigure(new point(0, 2, "black", "bishop"), desk); // слоны
+        addFigure(new point(0, sizeY - 3, "black", "bishop"), desk);
+        addFigure(new point(sizeX - 1, 2, "white", "bishop"), desk);
+        addFigure(new point(sizeX - 1, sizeY - 3, "white", "bishop"), desk);
+
+        addFigure(new point(0, 3, "black", "queen"), desk); //королевы
+        addFigure(new point(sizeX - 1, sizeY - 4, "white", "queen"), desk);
 
 
     }
+
 
 }
