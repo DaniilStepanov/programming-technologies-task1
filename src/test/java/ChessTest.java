@@ -24,15 +24,14 @@ public class ChessTest {
         Chess.addFigure(new Chess.point(7, 3, "White", "pawn"), e1);
 */
 
-        /*Chess.addFigure(new Chess.point(1, 4, "White", "pawn"), e1);
-
-
-
+        Chess.addFigure(new Chess.point(1, 4, "White", "pawn"), e1);
         assertEquals(false, Chess.equals(e1, forErrors));
+
 
         Chess.deleteFigure(1, 4, e1);
         assertEquals(true, Chess.equals(e1, forErrors));
-*/
+
+
         Chess.addFigure(new Chess.point(1, 4, "White", "pawn"), forErrors);
         Chess.addFigure(new Chess.point(1, 3, "White", "pawn"), e1);
         Chess.changePlaceOfFigure(1, 3, 1, 4, e1);

@@ -86,22 +86,27 @@ public class Chess {
         return desk;
     }
 
-    //static point[][] desk = new point[sizeX][sizeY];
 
     public static void viewDesk(@NotNull point[][] in) { // :)
+        final String ANSI_RESET = "\u001B[0m"; // белые будут белыми
+        final String ANSI_RED = "\u001B[31m";  // а черные будут красными
         String column1Format = "%-4.4s";
-        String formatInfo = column1Format + "\t|\t";
+        String formatInfo = column1Format;
         System.out.println("|-------------------------------------------------------------------------------------------|");
         for (point[] element1 : in) {
             System.out.print("|");
             for (point element2 : element1) {
-                //System.out.print(element2);
-                System.out.format(formatInfo, element2.figure);
+                String str = String.format(formatInfo, element2.figure);
+                if (element2.color.equalsIgnoreCase("black")){
+                    System.out.print(ANSI_RED + str +ANSI_RESET  + "\t|\t");
+                } else System.out.print(str  + "\t|\t");
+
             }
             System.out.println();
             System.out.println("|-------------------------------------------------------------------------------------------|");
         }
     }
+
 
     point[][] desk = createDesk();
     int[] typeOfWhiteFigures = {1, 0, 0, 0, 0, 0}; // считаем все виды фигур, хотя можно было бы проверять только пешки
@@ -140,6 +145,7 @@ public class Chess {
         desk.desk[deleteX][deleteY] = new point(deleteX, deleteY, "not", "0");
     }
 
+
     private static void wrongCoordinate(int x, int y) {
         if (x < 0 || x > sizeX) throw new IllegalArgumentException("Wrong X coordinate");
         if (y < 0 || y > sizeX) throw new IllegalArgumentException("Wrong Y coordinate");
@@ -163,31 +169,33 @@ public class Chess {
             if (!wrong) throw new IllegalArgumentException("Try in another coordinate"); // вряд-ли дойдет до такого
         } else throw new IllegalArgumentException("Try in another coordinate");
 */
+
+
         wrong = false;
         if (!desk.desk[newX][newY].figure.equalsIgnoreCase("0")) { // если новая клетка занята, новую фигуру выкидываем
             for (int i = 0; i < 6; i++) {
-                if (desk.desk[newX][newY].figure.equalsIgnoreCase(figures[i])) { // а есть ли такая фигура...
-                    if (!desk.desk[newX][newY].color.equalsIgnoreCase(desk.desk[oldX][oldY].color)) {
+                if (desk.desk[newX][newY].figure.equalsIgnoreCase(figures[i])) { // а есть ли такая фигура... считаем ее, чтобы удалить из счетчика по фигурам
+                    if (!desk.desk[newX][newY].color.equalsIgnoreCase(desk.desk[oldX][oldY].color)) { // своих бить не будем
                         if (desk.desk[newX][newY].color.equalsIgnoreCase("white")) {
                             desk.typeOfWhiteFigures[i]--;
                         } else desk.typeOfBlackFigures[i]--;
                         wrong = true;
                         break;
-                    }throw new IllegalArgumentException("You cant hit your figure");
-
+                    }
+                    throw new IllegalArgumentException("You cant hit your figure");
                 }
             }
             if (!wrong) throw new IllegalArgumentException("Try something another"); // очень вряд-ли сюда попадет
         }
 
-        //desk.desk[newX][newX].x = desk.desk[oldX][oldY].x;  // меняем местами
-        //desk.desk[newX][newX].y = desk.desk[oldX][oldY].y; // на старом месте останется пустая клетка
+
         desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
         desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
         desk.desk[oldX][oldY].color = "not";
         desk.desk[oldX][oldY].figure = "0";
         // desk.desk[oldX][oldY] = new point(oldX, oldY, "not", "0");
     }
+
 
     public static boolean equals(Chess a, Chess b) {  // сравнение
         for (int i = 0; i < sizeX; i++) {
