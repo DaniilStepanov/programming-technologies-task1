@@ -33,19 +33,12 @@ public class ChessTest {
         //Chess.viewDesk(e1.desk);
 
         Chess.addAllFigures(e1);
-        Chess.viewDesk(e1.desk);
+        //Chess.viewDesk(e1.desk);
         Chess.addAllFigures(forErrors);
-
-
-
+        //Chess.viewDesk(e1.desk);
+        Chess.changePlaceOfFigure(0, 4, 6, 5, e1);
+        Chess.viewDesk(e1.desk); // 7   3
     }
 
-
-    // king == король
-    // queen == королева
-    // castle == ладья
-    // bishop == слон
-    // knight == конь
-    // pawn == пешка
 
 }

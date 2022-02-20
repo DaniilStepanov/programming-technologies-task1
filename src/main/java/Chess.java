@@ -78,7 +78,7 @@ public class Chess {
         point[][] desk = new point[sizeX][sizeY];
         for (int i = 0; i < sizeX; i++) {
             for (int k = 0; k < sizeY; k++) {
-                desk[i][k] = new point(i, k, "not", "0");
+                desk[i][k] = new point(i, k, "not", " ");
             }
         }
         desk[0][4] = new point(0, 4, "black", "king");
@@ -110,11 +110,16 @@ public class Chess {
     point[][] desk = createDesk();
     int[] typeOfWhiteFigures = {1, 0, 0, 0, 0, 0}; // считаем все виды фигур, хотя можно было бы проверять только пешки
     int[] typeOfBlackFigures = {1, 0, 0, 0, 0, 0};
+    static int[] blackKing= {0, 4}; // храним положение королей, чтобы их было проще огородить дург от друга
+    static int[] whiteKing = {7, 3};
 
     public Chess() {
-        this.desk = desk;
         this.typeOfWhiteFigures = typeOfWhiteFigures;
-        this.typeOfBlackFigures = typeOfBlackFigures;
+        /*
+         this.desk = desk;
+         this.typeOfWhiteFigures = typeOfWhiteFigures;
+         this.typeOfBlackFigures = typeOfBlackFigures;
+        */
     }
 
 
@@ -141,7 +146,7 @@ public class Chess {
         if (desk.desk[deleteX][deleteY].figure.equalsIgnoreCase("king"))
             throw new IllegalArgumentException("Wrong deleted figure format");
 
-        desk.desk[deleteX][deleteY] = new point(deleteX, deleteY, "not", "0");
+        desk.desk[deleteX][deleteY] = new point(deleteX, deleteY, "not", " ");
     }
 
 
@@ -156,9 +161,24 @@ public class Chess {
 
 
         boolean wrong = false;
-        if (!desk.desk[newX][newY].figure.equalsIgnoreCase("0")) { // если новая клетка занята, новую фигуру выкидываем
+        if (!desk.desk[newX][newY].figure.equalsIgnoreCase(" ")) { // если новая клетка занята, новую фигуру выкидываем
             for (int i = 0; i < 6; i++) {
                 if (desk.desk[newX][newY].figure.equalsIgnoreCase(figures[i])) { // а есть ли такая фигура... считаем ее, чтобы удалить из счетчика по фигурам
+
+                   // проверка на близость королей при возможном ходе одного из них
+                    if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("king")) {
+                        if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")){
+                            if(Math.sqrt(Math.pow(newX - blackKing[0], 2) + Math.pow(newY - blackKing[1], 2)) <2){
+                                throw new IllegalArgumentException("You cant stay with another king");
+                            }
+                        }else{
+                             if(Math.sqrt(Math.pow(newX - whiteKing[0], 2) + Math.pow(newY - whiteKing[1], 2)) <2){
+                                throw new IllegalArgumentException("You cant stay with another king");
+                            }
+                        }
+                    }
+
+
                     if (!desk.desk[newX][newY].color.equalsIgnoreCase(desk.desk[oldX][oldY].color)) { // своих бить не будем
                         if (desk.desk[newX][newY].color.equalsIgnoreCase("white")) {
                             desk.typeOfWhiteFigures[i]--;
@@ -171,13 +191,33 @@ public class Chess {
             }
             if (!wrong) throw new IllegalArgumentException("Try something another"); // очень вряд-ли сюда попадет
         }
+        //boolean proverka = desk.desk[--newX][newY].figure.equalsIgnoreCase("king") || desk.desk[newX][--newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][--newY].figure.equalsIgnoreCase("king") || desk.desk[++newX][newY].figure.equalsIgnoreCase("king") || desk.desk[newX][++newY].figure.equalsIgnoreCase("king") || desk.desk[++newX][++newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][newY].figure.equalsIgnoreCase("king") ||
 
+        if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("king")) {
+            if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")){
+                whiteKing[0] = newX;
+                whiteKing[1] = newY;
+                desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
+                desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
+                desk.desk[oldX][oldY].color = "not";
+                desk.desk[oldX][oldY].figure = " ";
+            }else{
+                blackKing[0] = newX;
+                blackKing[1] = newY;
+                desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
+                desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
+                desk.desk[oldX][oldY].color = "not";
+                desk.desk[oldX][oldY].figure = " ";
+            }
+        }else {
 
-        desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
-        desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
-        desk.desk[oldX][oldY].color = "not";
-        desk.desk[oldX][oldY].figure = "0";
-        // desk.desk[oldX][oldY] = new point(oldX, oldY, "not", "0");
+            desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
+            desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
+            desk.desk[oldX][oldY].color = "not";
+            desk.desk[oldX][oldY].figure = " ";
+            // desk.desk[oldX][oldY] = new point(oldX, oldY, "not", " ");
+        }
+
     }
 
 
