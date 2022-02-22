@@ -14,7 +14,7 @@ public class Trie {
 
     public boolean ifExist(String word) {
         TrieNode curr = root;
-        for (char c:word.toLowerCase().toCharArray()) {
+        for (char c:word.trim().toLowerCase().toCharArray()) {
             if (curr.getChild(c) == null) return false;
             else curr = curr.getChild(c);
         }
@@ -42,17 +42,18 @@ public class Trie {
             curr.text = word.substring(0, i + 1);
         }
         curr.isLastSymbol = true;
-        words.add(word);
+        words.add(word.trim().toLowerCase());
     }
 
     public void remove(String word) {
-        if (!ifExist(word) || word.length() == 0) return;
+        if (!ifExist(word) || word.trim().length() == 0) return;
         TrieNode curr = root;
-        char[] chars = word.toLowerCase().toCharArray();
+        char[] chars = word.trim().toLowerCase().toCharArray();
         for (char c : chars) {
             TrieNode child = curr.getChild(c);
             if (child.count == 1) {
                 curr.children.remove(child);
+                words.remove(word);
                 return;
             } else {
                 child.count--;
@@ -60,7 +61,7 @@ public class Trie {
             }
         }
         curr.isLastSymbol = false;
-        words.remove(word);
+        words.remove(word.trim().toLowerCase());
     }
 
     public ArrayList<String> prefixSearch(String prefix) {
@@ -102,15 +103,13 @@ public class Trie {
 
     public static void main(String[] args) {
         Trie t = new Trie();
+        Trie t1 = new Trie();
         t.add("qer");
-        t.add("qre");
-        t.add("qaw");
-        t.add("qawr");
-        t.add("Qawr");
-        t.printIfExist("qaw");
-        t.remove("qaw");
-        t.printIfExist("qaw");
-        System.out.println(t.prefixSearch("q"));
+        t1.add("qer");
+        t1.add("qaw");
+        System.out.println(t1.words);
+        t1.remove("qaw");
+        System.out.println(t1.words);
     }
 }
 
