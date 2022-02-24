@@ -30,7 +30,7 @@ public class Chess {
 
         private void wrongPoint(@NotNull point newPoint, Chess in) {
 
-            if (!(this.x >= 0 && this.x < sizeX) || !(this.y >= 0 && this.y < sizeY)) {
+            if (!(x >= 0 && x < sizeX) || !(y >= 0 && y < sizeY)) {
                 throw new IllegalArgumentException("Wrong X||Y format");
             }
 
@@ -114,7 +114,6 @@ public class Chess {
     static int[] whiteKing = {7, 3};
 
     public Chess() {
-        this.typeOfWhiteFigures = typeOfWhiteFigures;
         /*
          this.desk = desk;
          this.typeOfWhiteFigures = typeOfWhiteFigures;
@@ -197,26 +196,16 @@ public class Chess {
             if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")){
                 whiteKing[0] = newX;
                 whiteKing[1] = newY;
-                desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
-                desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
-                desk.desk[oldX][oldY].color = "not";
-                desk.desk[oldX][oldY].figure = " ";
             }else{
                 blackKing[0] = newX;
                 blackKing[1] = newY;
-                desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
-                desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
-                desk.desk[oldX][oldY].color = "not";
-                desk.desk[oldX][oldY].figure = " ";
             }
-        }else {
+        } // desk.desk[oldX][oldY] = new point(oldX, oldY, "not", " ");
 
-            desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
-            desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
-            desk.desk[oldX][oldY].color = "not";
-            desk.desk[oldX][oldY].figure = " ";
-            // desk.desk[oldX][oldY] = new point(oldX, oldY, "not", " ");
-        }
+        desk.desk[newX][newY].color = desk.desk[oldX][oldY].color;
+        desk.desk[newX][newY].figure = desk.desk[oldX][oldY].figure;
+        desk.desk[oldX][oldY].color = "not";
+        desk.desk[oldX][oldY].figure = " ";
 
     }
 
@@ -252,6 +241,7 @@ public class Chess {
 
 
     public static void addAllFigures(Chess desk) {
+        deleteAllFigures(desk);
         for (int l = 0; l < sizeY; l++) {
             desk.desk[6][l].color = "white";
             desk.desk[6][l].figure = "pawn";
@@ -278,7 +268,17 @@ public class Chess {
         addFigure(new point(0, 3, "black", "queen"), desk); //королевы
         addFigure(new point(sizeX - 1, sizeY - 4, "white", "queen"), desk);
 
+        desk.desk[0][4] = new point(0, 4, "black", "king"); // благодаря полному удалению фигур можем ставить королей
+        desk.desk[7][3] = new point(7, 3, "white", "king");
 
+    }
+
+    static void deleteAllFigures(Chess desk){
+        for(int i = 0; i< sizeX;i++){
+            for (int j = 0; j< sizeY;j++){
+                desk.desk[i][j] = new point(i,j,"not"," ");
+            }
+        }
     }
 
 

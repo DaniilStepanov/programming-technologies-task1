@@ -24,20 +24,21 @@ public class ChessTest {
         Chess.addFigure(new Chess.point(1, 4, "White", "pawn"), forErrors);
         Chess.addFigure(new Chess.point(1, 3, "White", "pawn"), e1);
         Chess.changePlaceOfFigure(1, 3, 1, 4, e1);
-        //Chess.viewDesk(forErrors.desk);
-        //Chess.viewDesk(e1.desk);
         assertTrue(Chess.equals(e1, forErrors));
+
 
         Chess.addAllColorPawns("white", e1);
         Chess.addAllColorPawns("black", e1);
-        //Chess.viewDesk(e1.desk);
+        Chess.viewDesk(e1.desk);
 
         Chess.addAllFigures(e1);
-        //Chess.viewDesk(e1.desk);
         Chess.addAllFigures(forErrors);
-        //Chess.viewDesk(e1.desk);
-        Chess.changePlaceOfFigure(0, 4, 6, 5, e1);
+        Chess.changePlaceOfFigure(1, 3, 4, 5, e1);
+        Chess.addAllFigures(e1);
         Chess.viewDesk(e1.desk); // 7   3
+
+
+
     }
 
 
