@@ -10,12 +10,12 @@ public class Main {
         graph.addVertex("E");
         graph.addVertex("F");
 
-        graph.addArc(0,1,3, true);
-        graph.addArc(1,2,3, true);
-        graph.addArc(2,3,3, true);
-        graph.addArc(0,4,3, true);
-        graph.addArc(4,5,3, true);
+        graph.addArc("A","B",3, true);
+        graph.addArc("B","C",3, true);
+        graph.addArc("C","D",3, true);
+        graph.addArc("A","E",3, true);
+        graph.addArc("E","F",3, true);
 
-        graph.goDeep(2);
+        graph.goDeep(0);
     }
 }
