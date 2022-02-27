@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        Book f = new Book("ASS", "Egor", "gachi", "A3");
+        Book f = new Book("ПП", "Egor", "gachi", "A3");
         Library l = new Library();
         l.addBook(f);
         f.setName("->");
