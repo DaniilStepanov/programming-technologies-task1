@@ -29,14 +29,15 @@ public class ChessTest {
 
         Chess.addAllColorPawns("white", e1);
         Chess.addAllColorPawns("black", e1);
-        Chess.viewDesk(e1.desk);
+        //Chess.viewDesk(e1.desk);
 
         Chess.addAllFigures(e1);
         Chess.addAllFigures(forErrors);
         Chess.changePlaceOfFigure(1, 3, 4, 5, e1);
-        Chess.addAllFigures(e1);
-        Chess.viewDesk(e1.desk); // 7   3
-
+        Chess.viewDesk(e1.desk);
+        Chess.changePlaceOfFigure(4, 5, 1, 3, e1);
+        Chess.viewDesk(forErrors.desk); // 7   3
+        assertTrue(Chess.equals(e1, forErrors));
 
 
     }
