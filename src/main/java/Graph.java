@@ -148,6 +148,20 @@ public class Graph {
         return -1;
     }
 
+    public void renameVertex(String oldName, String newName) {
+        vertexList.get(getVertexIndexByName(oldName)).setName(newName);
+    }
+
+    public void reWeightArc(String from, String to, int newWeight) {
+        int fromN = getVertexIndexByName(from);
+        int toN = getVertexIndexByName(to);
+        connectionMatrix.get(fromN).set(toN, newWeight);
+        if (connectionMatrix.get(toN).get(fromN) > 0) {
+            connectionMatrix.get(toN).set(fromN, newWeight);
+        }
+
+    }
+
     public void printConnectionMatrix() {
         for (int i = 0; i < maxVertexCount; i++) {
             for (int t = 0; t < maxVertexCount; t++) {
@@ -157,6 +171,18 @@ public class Graph {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public ArrayList<String> listAllVertexes() {
+        ArrayList<String> vertexStringList = new ArrayList<>();
+        for (Vertex vertex : vertexList) {
+            vertexStringList.add(vertex.getName());
+        }
+        return vertexStringList;
+    }
+
+    public List<List<Integer>> getConnectionMatrix() {
+        return connectionMatrix;
     }
 
 
