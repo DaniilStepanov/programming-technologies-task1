@@ -14,7 +14,7 @@ public class Library {
     public ArrayList<Book> searchBook(String a, String b, String c, String d ) {
         ArrayList<Book> search = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if ((list.get(i).getName() == a || a.equals("")) && (list.get(i).getAutor() == b || b.equals(""))
+            if ((list.get(i).getName().equals(a) || a.equals("")) && (list.get(i).getAutor() == b || b.equals(""))
                     && (list.get(i).getGenre() == c || c.equals("")) && (list.get(i).getCode() == d || d.equals(""))) {
                 search.add(list.get(i));
 
