@@ -1,4 +1,5 @@
 import java.lang.String;
+import java.util.Objects;
 public class Book {
     private String name;
     private String autor;
@@ -13,6 +14,11 @@ public class Book {
     }
     public Book(){
 
+    }
+    public String toString(){
+        StringBuilder str = new StringBuilder();
+        str.append(name + " ").append(autor + " ").append(autor + " ").append(code);
+        return str.toString();
     }
 
     public void setName(String name){
@@ -38,6 +44,15 @@ public class Book {
     }
     public String getCode(){
         return code;
+    }
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(name, book.name) && Objects.equals(autor, book.autor) &&
+                Objects.equals(genre, book.genre) && Objects.equals(code, book.code);
+
     }
 
 }
