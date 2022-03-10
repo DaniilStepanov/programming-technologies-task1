@@ -54,6 +54,10 @@ public class Book {
                 Objects.equals(genre, book.genre) && Objects.equals(code, book.code);
 
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, autor, genre, code);
+    }
 
 }
 
