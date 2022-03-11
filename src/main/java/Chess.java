@@ -151,7 +151,7 @@ public class Chess {
 
     private static void wrongCoordinate(int x, int y) {
         if (x < 0 || x > sizeX) throw new IllegalArgumentException("Wrong X coordinate");
-        if (y < 0 || y > sizeX) throw new IllegalArgumentException("Wrong Y coordinate");
+        if (y < 0 || y > sizeY) throw new IllegalArgumentException("Wrong Y coordinate");
     }
 
     public static void changePlaceOfFigure(int oldX, int oldY, int newX, int newY, @NotNull Chess desk) {
