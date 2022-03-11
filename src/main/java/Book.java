@@ -15,7 +15,7 @@ public class Book {
     public Book(){
 
     }
-    public String toString(){
+    public String toString(){ //перегруженный метод toString, ляя вывода полей объекта
         StringBuilder str = new StringBuilder();
         str.append(name + " ").append(autor + " ").append(autor + " ").append(code);
         return str.toString();
