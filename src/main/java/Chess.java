@@ -13,6 +13,16 @@ public class Chess {
     // knight == конь
     // pawn == пешка
 
+    int x;
+    int y;
+    String color;
+    String figure;
+
+    public Chess(int wX, int wY, int bX, int bY) {
+        this.whiteKing = new int[]{wX, wY};
+        this.blackKing = new int[]{bX, bY};
+    }
+
     static class point {
         int x;
         int y;
@@ -110,7 +120,7 @@ public class Chess {
     point[][] desk = createDesk();
     int[] typeOfWhiteFigures = {1, 0, 0, 0, 0, 0}; // считаем все виды фигур, хотя можно было бы проверять только пешки
     int[] typeOfBlackFigures = {1, 0, 0, 0, 0, 0};
-    static int[] blackKing= {0, 4}; // храним положение королей, чтобы их было проще огородить дург от друга
+    static int[] blackKing = {0, 4}; // храним положение королей, чтобы их было проще огородить дург от друга
     static int[] whiteKing = {7, 3};
 
     public Chess() {
@@ -164,14 +174,14 @@ public class Chess {
             for (int i = 0; i < 6; i++) {
                 if (desk.desk[newX][newY].figure.equalsIgnoreCase(figures[i])) { // а есть ли такая фигура... считаем ее, чтобы удалить из счетчика по фигурам
 
-                   // проверка на близость королей при возможном ходе одного из них
+                    // проверка на близость королей при возможном ходе одного из них
                     if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("king")) {
-                        if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")){
-                            if(Math.sqrt(Math.pow(newX - blackKing[0], 2) + Math.pow(newY - blackKing[1], 2)) <2){
+                        if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")) {
+                            if (Math.sqrt(Math.pow(newX - blackKing[0], 2) + Math.pow(newY - blackKing[1], 2)) < 2) {
                                 throw new IllegalArgumentException("You cant stay with another king");
                             }
-                        }else{
-                             if(Math.sqrt(Math.pow(newX - whiteKing[0], 2) + Math.pow(newY - whiteKing[1], 2)) <2){
+                        } else {
+                            if (Math.sqrt(Math.pow(newX - whiteKing[0], 2) + Math.pow(newY - whiteKing[1], 2)) < 2) {
                                 throw new IllegalArgumentException("You cant stay with another king");
                             }
                         }
@@ -193,10 +203,10 @@ public class Chess {
         //boolean proverka = desk.desk[--newX][newY].figure.equalsIgnoreCase("king") || desk.desk[newX][--newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][--newY].figure.equalsIgnoreCase("king") || desk.desk[++newX][newY].figure.equalsIgnoreCase("king") || desk.desk[newX][++newY].figure.equalsIgnoreCase("king") || desk.desk[++newX][++newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][newY].figure.equalsIgnoreCase("king") ||
 
         if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("king")) {
-            if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")){
+            if (desk.desk[oldX][oldY].figure.equalsIgnoreCase("white")) {
                 whiteKing[0] = newX;
                 whiteKing[1] = newY;
-            }else{
+            } else {
                 blackKing[0] = newX;
                 blackKing[1] = newY;
             }
@@ -273,10 +283,10 @@ public class Chess {
 
     }
 
-    static void deleteAllFigures(Chess desk){
-        for(int i = 0; i< sizeX;i++){
-            for (int j = 0; j< sizeY;j++){
-                desk.desk[i][j] = new point(i,j,"not"," ");
+    static void deleteAllFigures(Chess desk) {
+        for (int i = 0; i < sizeX; i++) {
+            for (int j = 0; j < sizeY; j++) {
+                desk.desk[i][j] = new point(i, j, "not", " ");
             }
         }
     }
