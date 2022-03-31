@@ -17,11 +17,6 @@ public class BinaryTree {
 
     Node root;
 
-    /*BinaryTree() {
-        root = (new Node(-1));
-    }*/
-
-
     private Node addNode(Node current, int value) {
         if (current == null || current.value == -1) return new Node(value);
 
