@@ -9,15 +9,20 @@
 
 public final class Main {
     public static void main(String[] args) {
-        Field a = new Field(3);
+        Field a = new Field(5);
         a.show();
         a.addNought(3, 3);
         a.show();
-        a.clearCell(2, 2);
+        a.clearCell(3, 3);
         a.show();
-        a.addCross(3, 3);
+        //a.addCross(3, 3);
         a.addCross(2, 2);
         a.addCross(1, 1);
+        a.addCross(3, 1);
+        a.addCross(2, 1);
+        a.addCross(5, 5);
+        a.addCross(3, 3);
+        a.addCross(4, 4);
         a.show();
         a.theLongestCross();
     }

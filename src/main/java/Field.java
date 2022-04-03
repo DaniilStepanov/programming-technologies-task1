@@ -41,14 +41,14 @@ public final class Field {
         int[] count = {0, 0, 0, 0};
         int max = -1;
         // проверка рядов и строк
-        for (int row = 0; row < size; row++) {
-            for (int column = 0; column < size; column++) {
-                if (view[row][column] == 'X') count[0]++;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (view[i][j] == 'X') count[0]++;
                 else {
                     if (count[0] > max) max = count[0];
                     count[0] = 0;
                 }
-                if (view[column][row] == 'X') count[1]++;
+                if (view[j][i] == 'X') count[1]++;
                 else {
                     if (count[1] > max) max = count[1];
                     count[1] = 0;
@@ -61,35 +61,93 @@ public final class Field {
         }
         // проверка диагоналей
         for (int i = 0; i < size; i++){
-            for (int j = i; j >= 0 ; j--) {
-                for (int l = 0; l <= i; l++) {
-                    if (view[l][j] == 'X') count[0]++;
-                    else {
-                        if (count[0] > max) max = count[0];
-                        count[0] = 0;
-                    }
-                    if (view[j][l] == 'X') count[1]++;
-                    else {
-                        if (count[1] > max) max = count[1];
-                        count[1] = 0;
-                    }
-                    if (view[l][size - j - 1] == 'X') count[2]++;
-                    else {
-                        if (count[2] > max) max = count[2];
-                        count[2] = 0;
-                    }
-                    if (view[j][size - l - 1] == 'X') count[3]++;
-                    else {
-                        if (count[3] > max) max = count[3];
-                        count[3] = 0;
+            for (int j = 0; j <= i; j++) {
+                if (view[j][i - j] == 'X') count[0]++;
+                else {
+                    if (count[0] > max) max = count[0];
+                    count[0] = 0;
                 }
-
+                if (view[size - 1 - j][size - 1 - i + j] == 'X') count[1]++;
+                else {
+                    if (count[1] > max) max = count[1];
+                    count[1] = 0;
+                }
+                if (view[j][size - 1 - i + j] == 'X') count[2]++;
+                else {
+                    if (count[2] > max) max = count[2];
+                    count[2] = 0;
+                }
+                if (view[size - 1 - j][i - j] == 'X') count[3]++;
+                else {
+                    if (count[3] > max) max = count[3];
+                    count[3] = 0;
                 }
             }
             for (int k = 0; k <= 3; k++) {
                 if (count[k] > max) max = count[k];
+                count[k] = 0;
             }
         }
         System.out.println("Самая длинная последовательность крестиков: " + max);
     }
+    public void theLongestNought() {
+        int[] count = {0, 0, 0, 0};
+        int max = -1;
+        // проверка рядов и строк
+        for (int row = 0; row < size; row++) {
+            for (int column = 0; column < size; column++) {
+                if (view[row][column] == 'O') count[0]++;
+                else {
+                    if (count[0] > max) max = count[0];
+                    count[0] = 0;
+                }
+                if (view[column][row] == 'O') count[1]++;
+                else {
+                    if (count[1] > max) max = count[1];
+                    count[1] = 0;
+                }
+            }
+            for (int k = 0; k <= 1; k++) {
+                if (count[k] > max) max = count[k];
+                count[k] = 0;
+            }
+        }
+        // проверка диагоналей
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j <= i; j++) {
+                if (view[j][i - j] == 'O') count[0]++;
+                else {
+                    if (count[0] > max) max = count[0];
+                    count[0] = 0;
+                }
+                if (view[size - 1 - j][size - 1 - i + j] == 'O') count[1]++;
+                else {
+                    if (count[1] > max) max = count[1];
+                    count[1] = 0;
+                }
+                if (view[j][size - 1 - i + j] == 'O') count[2]++;
+                else {
+                    if (count[2] > max) max = count[2];
+                    count[2] = 0;
+                }
+                if (view[size - 1 - j][i - j] == 'O') count[3]++;
+                else {
+                    if (count[3] > max) max = count[3];
+                    count[3] = 0;
+                }
+            }
+            for (int k = 0; k <= 3; k++) {
+                if (count[k] > max) max = count[k];
+                count[k] = 0;
+            }
+        }
+        System.out.println("Самая длинная последовательность крестиков: " + max);
+    }
+    /* private void objectInit (int row, int column, char object, int[] count, int place, int max) {
+        if (view[row][column] == object) count[place]++;
+        else {
+            if (count[place] > max) max = count[place];
+            count[place] = 0;
+        }
+    } */
 }
