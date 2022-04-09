@@ -15,17 +15,14 @@ import java.util.Objects;
 
 public class BinaryTree {
 
+
     Node root;
 
     private Node addNode(Node current, int value) {
         if (current == null || current.value == -1) return new Node(value);
-
         if (value < current.value) current.left = addNode(current.left, value);
-
         else if (value > current.value) current.right = addNode(current.right, value);
-
         else return current;
-
         return current;
     }
 
@@ -49,27 +46,53 @@ public class BinaryTree {
         else return findMaxOfLeft(start.right);
     }
 
+    Node potentialParent = null;
+    int leftOrRight = -1;    //0 - пошли к левому ребенку, 1 - пошли к правому
+
     private Node removeNode(Node current, int value) {
         if (current == null) return null;
-
         if (value == current.value) {
-            if (current.left == null && current.right == null) return null;
-
-            if (current.left == null) return current.right;
-
-            if (current.right == null) return current.left;
-
+            if (current.left == null && current.right == null) {
+                if (potentialParent != null) {
+                    if (leftOrRight == 1) potentialParent.right = null;
+                    else potentialParent.left = null;
+                }
+                return null;
+            }
+            if (current.left == null) {
+                if (potentialParent != null) {
+                    if (leftOrRight == 1) potentialParent.right = current;
+                    else potentialParent.left = current;
+                }
+                return current.right;
+            }
+            if (current.right == null) {
+                if (potentialParent != null) {
+                    if (leftOrRight == 1) potentialParent.right = current;
+                    else potentialParent.left = current;
+                }
+                return current.left;
+            }
             else {
+                if (potentialParent != null) {
+                    if (leftOrRight == 1) potentialParent.right = current;
+                    else potentialParent.left = current;
+                }
                 current.value = findMaxOfLeft(current.left);
                 current.left = removeNode(current.left, findMaxOfLeft(current.left));
                 return current;
             }
         }
-
-        if (value < current.value) current.left = removeNode(current.left, value);
-
-        else current.right = removeNode(current.right, value);
-
+        if (value < current.value) {
+            potentialParent = current;
+            leftOrRight = 0;
+            current.left = removeNode(current.left, value);
+        }
+        else {
+            potentialParent = current;
+            leftOrRight = 1;
+            current.right = removeNode(current.right, value);
+        }
         return current;
     }
 
@@ -115,20 +138,21 @@ public class BinaryTree {
 
     public static void main(String[] args) {
         BinaryTree a = new BinaryTree();
-        a.add(5);
-        a.add(2);
-        a.add(6);
-        System.out.println(a.search(1));
-        System.out.println(a.search(2));
-        System.out.println(a.parent(2));
-        System.out.println(a.parent(6));
-        System.out.println(a.parent(5));
-        System.out.println(a.leftChild(5));
-        System.out.println(a.rightChild(5));
-        System.out.println(a.rightChild(2));
-        a.remove(2);
-        System.out.println(a.leftChild(5));
-        System.out.println(a.root);
+        a.add(10);
+        a.add(300);
+        a.add(150);
+        a.add(75);
+        a.add(225);
+        a.add(50);
+        a.add(100);
+        a.add(200);
+        a.add(250);
+        System.out.println(a.leftChild(300));
+        System.out.println(a.leftChild(150));
+        System.out.println(a.rightChild(75));
+        a.remove(150);
+        System.out.println(a.leftChild(300));
+        System.out.println(a.rightChild(75));
     }
 
     class Node {
