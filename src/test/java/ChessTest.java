@@ -1,11 +1,13 @@
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 public class ChessTest {
 
     @Test
     public void TestChess() {
-        Chess forErrors = new Chess(7,3,0,4);
-        Chess e1 = new Chess(7,3,0,4);
+        Chess forErrors = new Chess(7, 3, 0, 4);
+        Chess e1 = new Chess(7, 3, 0, 4);
 
         e1.addFigure(1, 4, "White", "pawn");
         assertFalse(e1.equals(forErrors));
@@ -28,7 +30,7 @@ public class ChessTest {
         e1.changePlaceOfFigure(4, 5, 1, 3);
         e1.viewDesk();
         forErrors.viewDesk(); // 7   3
-        assertTrue(e1.equals( forErrors));
+        assertTrue(e1.equals(forErrors));
     }
 
 

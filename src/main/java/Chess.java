@@ -1,7 +1,5 @@
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Array;
-
 public class Chess {
     final int sizeX = 8;
     final int sizeY = 8;
@@ -50,13 +48,12 @@ public class Chess {
     }
 
 
-
     public void addFigure(int x, int y, String color, String figure) {
-        desk[x][y] = new PointForDesk(x,y,color, figure);
-        for (int i = 0; i<figures.length;i++){
-            if (figures[i].equals(figure)){
+        desk[x][y] = new PointForDesk(x, y, color, figure);
+        for (int i = 0; i < figures.length; i++) {
+            if (figures[i].equals(figure)) {
                 if (color.equalsIgnoreCase("white")) typeOfWhiteFigures[i]++;
-                else  if (color.equalsIgnoreCase("black")) typeOfBlackFigures[i]++;
+                else if (color.equalsIgnoreCase("black")) typeOfBlackFigures[i]++;
                 else throw new IllegalArgumentException("Wrong color");
             }
         }
@@ -64,9 +61,6 @@ public class Chess {
 
     public void deleteFigure(int deleteX, int deleteY) {
         wrongCoordinate(deleteX, deleteY);
-        //if ((deleteX < 0 || deleteX > 7) || ((deleteY < 0 || deleteY > 7)))
-         //   throw new IllegalArgumentException("Wrong X||Y format");
-
         for (int i = 0; i < 6; i++) {
             if (figures[i].equalsIgnoreCase(desk[deleteX][deleteY].figure)) {
                 if (desk[deleteX][deleteY].color.equalsIgnoreCase("white") && typeOfWhiteFigures[i] != 0) {
@@ -124,7 +118,6 @@ public class Chess {
             }
             if (!wrong) throw new IllegalArgumentException("Try something another"); // очень вряд-ли сюда попадет
         }
-        //boolean proverka = desk.desk[--newX][newY].figure.equalsIgnoreCase("king") || desk.desk[newX][--newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][--newY].figure.equalsIgnoreCase("king") || desk.desk[++newX][newY].figure.equalsIgnoreCase("king") || desk.desk[newX][++newY].figure.equalsIgnoreCase("king") || desk.desk[++newX][++newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][newY].figure.equalsIgnoreCase("king") || desk.desk[--newX][newY].figure.equalsIgnoreCase("king") ||
 
         if (desk[oldX][oldY].figure.equalsIgnoreCase("king")) {
             if (desk[oldX][oldY].figure.equalsIgnoreCase("white")) {
@@ -134,8 +127,7 @@ public class Chess {
                 blackKing[0] = newX;
                 blackKing[1] = newY;
             }
-        } // desk.desk[oldX][oldY] = new PointForDesk(oldX, oldY, "not", " ");
-
+        }
         desk[newX][newY].color = desk[oldX][oldY].color;
         desk[newX][newY].figure = desk[oldX][oldY].figure;
         desk[oldX][oldY].color = "not";
@@ -154,7 +146,6 @@ public class Chess {
 
             }
         }
-
         return true;
     }
 
